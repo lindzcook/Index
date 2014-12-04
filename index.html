@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+	<select id="dropdown"></select>
+
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="srcTable/tabletop.js"></script>
+
+	<script type="text/javascript">
+
+	//things you need to fill in
+
+	//this is your Google doc with all the data
+
+var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1DJjMQ9Goqhcj5ih9-YNSsohiP8PEy7jG16ZuYTSsHJ8/pubhtml';
+//must be the same as the names in the spreadsheet
+var indexNames = ["Main", "sub1", "sub2", "sub3", "sub4", "sub5", "sub6", "sub7", "sub8"];
+//titles to display, must be in order
+var titles = ["U.S. News & World Report Main Index", "Sub Index 1", "Sub Index 2", "Sub Index 3" , "Sub Index 4", "Sub Index 5", "Sub Index 6", "Sub Index 7", "Sub Index 8"];
+//paragraphs to display, must be in order
+var paragraphs =["blah", "blah","blah","blah","blah","blah","blah","blah","blah"]; 
+
+//read in the index names and populate the drop down menu
+//give each a div, h2, chart div and p
+
+for (i = 0; i < indexNames.length; i++){
+	$("#dropdown").append('<option value="#' + indexNames[i] + '">' + indexNames[i] + '</option>');
+	$("body").append('<div id="' + indexNames[i] + '"><h2>'+ titles[i] + '</h2><div id="chart' + indexNames[i] + '"></div><p>' + paragraphs[i] +'</p></div>');
+}
+
+//get the data
+window.onload = function() { init() };
+
+  function init() {
+    Tabletop.init( { key: public_spreadsheet_url,
+                     callback: showInfo} )
+  }
+
+  //test for data?
+  function showInfo(data, tabletop) {
+    alert("Successfully processed!");
+    console.log(data);
+
+//dropdown navigation
+$('#dropdown').change( function () {
+            var targetPosition = $($(this).val()).offset().top;
+            $('html,body').animate({ scrollTop: targetPosition}, 'slow');
+        });
+
+  
+  }
+   
+</script>
+
+
+
+</body>
+</html>
